@@ -2,12 +2,21 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
+import '@mantine/core/styles.css';
+import { createTheme, MantineProvider } from '@mantine/core';
 import reportWebVitals from './reportWebVitals';
+import '@mantine/carousel/styles.css';
+const theme = createTheme({
+  /** Put your mantine theme override here */
+});
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
+    <MantineProvider defaultColorScheme='light'>
     <App />
+    </MantineProvider>
   </React.StrictMode>
 );
 
