@@ -73,11 +73,11 @@ function Product() {
         title: "Please confirm your action",
         children: (
           <Text size="sm">
-            This action is so important that you are required to confirm it with a
-            modal. Please click one of these buttons to proceed.
+            By using this website, you agree to our use of cookies to enhance your browsing experience. 
+            For more information, please refer to our cookie policy.
           </Text>
         ),
-        labels: { confirm: "Confirm", cancel: "Cancel" },
+        labels: { confirm: "Accept cookies", cancel: "Cancel" },
         onCancel: () => {
             localStorage.setItem("cookies", false )
             window.location.reload()
