@@ -6,6 +6,9 @@ import '@mantine/core/styles.css';
 import { createTheme, MantineProvider } from '@mantine/core';
 import reportWebVitals from './reportWebVitals';
 import '@mantine/carousel/styles.css';
+
+import { ModalsProvider } from '@mantine/modals';
+
 const theme = createTheme({
   /** Put your mantine theme override here */
 });
@@ -15,7 +18,9 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <MantineProvider defaultColorScheme='light'>
-    <App />
+    <ModalsProvider>
+      <App />
+     </ModalsProvider>
     </MantineProvider>
   </React.StrictMode>
 );

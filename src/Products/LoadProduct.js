@@ -1,10 +1,13 @@
-import { Image, SegmentedControl, Button,Rating,Accordion,Divider,Modal,PinInput, Skeleton } from '@mantine/core';
+import { Image , SegmentedControl,Text, Button,Rating,Accordion,Divider,Modal,PinInput, Skeleton } from '@mantine/core';
 import {IconShoppingBag} from '@tabler/icons-react'
 import './product.css'
 import {isMobile} from 'react-device-detect';
 import { useDisclosure } from '@mantine/hooks';
 import React, {useState, useEffect, useRef} from 'react';
 import { Carousel } from '@mantine/carousel';
+
+import { modals } from '@mantine/modals';
+import CarouselSet from './Carousel'
 const groceries = [
     {
       emoji: '',
@@ -30,7 +33,12 @@ const groceries = [
 
 function Product() {
     document.title = "Product Page";
-    const [imgloadcounter, setimgloadcounter] = useState(0);
+    const [reloadKey, setReloadKey] = useState(0);
+    const [height, seth] = useState(599.99)
+    const [heightm, sethm] = useState(299.99)
+    useEffect(() => {
+        setReloadKey(prevKey => prevKey + 1);
+    }, [])
     const divRef = useRef(null);
     const handleRemove = () => {
         if (divRef.current) {
@@ -40,20 +48,50 @@ function Product() {
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        if(imgloadcounter===3){
             delayfuction()
-        }
-    },[imgloadcounter])
+        
+    },[])
+
     function delayfuction() {
         setTimeout(() => {
           // Code to run after 2 seconds
+          
           setIsLoading(false)
           handleRemove()
+          if(localStorage.getItem("cookies")==false){
+            openModal()
+          }
+          if(localStorage.getItem("cookies")==null){
+            openModal()
+          }
+          
+ 
         }, 500);
       }
+      const openModal = () =>
+      modals.openConfirmModal({
+        title: "Please confirm your action",
+        children: (
+          <Text size="sm">
+            This action is so important that you are required to confirm it with a
+            modal. Please click one of these buttons to proceed.
+          </Text>
+        ),
+        labels: { confirm: "Confirm", cancel: "Cancel" },
+        onCancel: () => {
+            localStorage.setItem("cookies", false )
+            window.location.reload()
+        },
+        onConfirm: () => {
+            localStorage.setItem("cookies", false )
+            window.location.reload()
+        },
+
+      })
+    
 
     const LoadingMobile = () => <div class='p-8'>
-        <div class='pt-10'><Skeleton height={300} mb="xl" /></div>
+        <div class='pt-10'><Skeleton height={heightm} mb="xl" /></div>
         <div class='pt-6'><Skeleton height={8} mt={0} width="30%"  /></div>
         <Skeleton height={8} mt={25} width="50%" radius="xl" />
         <Skeleton height={8} mt={6} width="90%" radius="xl" />
@@ -108,15 +146,13 @@ function Product() {
                     </div>
             </Modal>
                 <div id='leftIMG' class='w-screen h-[50vh] bg-slate-0  flex justify-center items-center pr-4 pl-4 pt-14'>
-                    <Carousel slideGap="md" height={300} >
+                <Carousel slideGap="md" withIndicators withControls={false} loop height={300} >
                         <Carousel.Slide>
                             <Image
                             radius="md"
                             h={300}
                             src="https://images.unsplash.com/photo-1707307006036-22663ea0c88d?q=80&w=2942&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                            onLoad={() => {
-                                setimgloadcounter(1)
-                            }}
+
                             />
                         </Carousel.Slide>
                         <Carousel.Slide>
@@ -124,7 +160,7 @@ function Product() {
                             radius="md"
                             h={300}
                             src="https://images.unsplash.com/photo-1707464568815-7fb6b6ea3e2a?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                            onLoad={() => setimgloadcounter(2)}
+                    
                             
                             />
                         </Carousel.Slide>
@@ -133,7 +169,7 @@ function Product() {
                             radius="md"
                             h={300}
                             src="https://images.unsplash.com/photo-1707249700537-7a2e4004a139?q=80&w=2942&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                            onLoad={() => setimgloadcounter(3)}
+                            
                             />
                         </Carousel.Slide>
 
@@ -151,7 +187,7 @@ function Product() {
                     </div>
                     <div class='pt-6 w-100% h-auto'>
 
-                            <button id='buttonForMobile' fullWidth color='gray'    >BUY <IconShoppingBag id='icon' size={17} /></button>
+                            <button id='buttonForMobile' fullWidth color='gray'  style={{padding: '8px'}}  >BUY <IconShoppingBag id='icon' size={17} /></button>
                     
                     </div>
                     <div class='w-full h-auto text-[12px] pt-1 text-right cursor-pointer' onClick={open} > Delivery to {pincode}, <b>Change?</b></div>
@@ -174,7 +210,7 @@ function Product() {
     
     <>
         <div class='w-[100vw] h-[100vh] bg-white fixed z-50' ref={divRef}  style={{opacity: isLoading ? '100%' : '0%', zIndex:isLoading ? '10' : '-1'}} ><LoadingDesktop /></div>
-         <div class='w-screen h-screen flex flex-row' >
+         <div class='w-screen h-screen flex flex-row'  >
           <Modal opened={opened} onClose={close} title="Change Pincode" centered>
                 <div class='w-auto h-auto flex flex-col justify-center items-center' >
                     <PinInput length={6} autoFocus type="number" name='address' inputMode="numeric" title='address'
@@ -186,34 +222,8 @@ function Product() {
                     </div>
             </Modal>
             <div  id='leftIMG' class='w-[60vw] h-screen bg-slate-0 flex justify-center items-center pl-[40px]'>
-                 <Carousel slideGap="md" height={600} >
-                    <Carousel.Slide>
-                        <Image
-                        radius="md"
-                        h={600}
-                        src="https://images.unsplash.com/photo-1707307006036-22663ea0c88d?q=80&w=2942&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                        onLoad={() => setimgloadcounter(1)}
-                        />
-                    </Carousel.Slide>
-                    <Carousel.Slide>
-                        <Image
-                        radius="md"
-                        h={600}
-                        src="https://images.unsplash.com/photo-1707464568815-7fb6b6ea3e2a?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                        onLoad={() => setimgloadcounter(2)}
-                        
-                        />
-                    </Carousel.Slide>
-                    <Carousel.Slide>
-                        <Image
-                        radius="md"
-                        h={600}
-                        src="https://images.unsplash.com/photo-1707249700537-7a2e4004a139?q=80&w=2942&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                        onLoad={() => setimgloadcounter(3)}
-                        />
-                    </Carousel.Slide>
-
-                </Carousel>
+                <div class=''> <CarouselSet  key={reloadKey} wi={true}  h={height} /></div>
+               
             </div>
             <div id='rightD' class='w-[40vw] h-screen bg-slate-0 flex flex-col justify-center pl-[30px]' >
                 <div class='w-[30vw] h-[37.5rem] bg-slate-0 flex flex-col pt-[15px]'>
@@ -225,7 +235,7 @@ function Product() {
                     <div class='h-auto w-[20vw] pt-2'>
                         <SegmentedControl  size="sm" fullWidth data={['XS', ' S', ' M', 'XL', 'XXL']} />
                     </div>
-                    <div class='pt-6 w-100% h-auto'><Button id='buttonForMobile' fullWidth variant="filled" color="gray" rightSection={<IconShoppingBag size={14} />} >BUY</Button></div>
+                    <div class='pt-6 w-100% h-auto'><Button id='buttonForMobile' fullWidth variant="filled" color="gray" style={{padding: '12px'}}  rightSection={<IconShoppingBag size={14} />} >BUY</Button></div>
                     <div class='w-full h-auto text-[9px] pt-1 text-right cursor-pointer' onClick={open} > Delivery to {pincode}, <b>Change?</b></div>
                     <div class='pt-6 w-100% h-auto flex flex-row items-center'><Rating value={3.5} fractions={2} readOnly color="gray" /><p class='pl-2 text-sm'>2K Rating</p></div>
                     <div class='pt-5'><Divider my="md" /> </div>
