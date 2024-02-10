@@ -7,7 +7,7 @@ import {
 } from "react-router-dom";
 
 import Product from './Products/LoadProduct'
-
+import Home from './Home/Home'
 
 
 
@@ -17,6 +17,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/Product" element={<Product />} />
+        <Route path="/" element={<Home />} />
       </Routes>
   </BrowserRouter>
   );
