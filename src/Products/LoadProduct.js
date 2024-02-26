@@ -1,11 +1,13 @@
 import { Image , SegmentedControl,Text, Button,Rating,Accordion,Divider,Modal,PinInput, Skeleton } from '@mantine/core';
-import {IconShoppingBag} from '@tabler/icons-react'
+
 import './product.css'
 import {isMobile} from 'react-device-detect';
 import { useDisclosure } from '@mantine/hooks';
 import React, {useState, useEffect, useRef} from 'react';
+import platform from 'platform';
 import { Carousel } from '@mantine/carousel';
-
+import buyani from './wired-outline-146-trolley.gif'
+import buyanigif from './main.mp4'
 import { modals } from '@mantine/modals';
 import CarouselSet from './Carousel'
 const groceries = [
@@ -36,6 +38,8 @@ function Product() {
     const [reloadKey, setReloadKey] = useState(0);
     const [height, seth] = useState(599.99)
     const [heightm, sethm] = useState(299.99)
+    let brodata
+    (platform.name == "Safari") ? brodata=true: brodata=false
     useEffect(() => {
         setReloadKey(prevKey => prevKey + 1);
     }, [])
@@ -187,7 +191,7 @@ function Product() {
                     </div>
                     <div class='pt-6 w-100% h-auto'>
 
-                            <button id='buttonForMobile' fullWidth color='gray'  style={{padding: '8px'}}  >BUY <IconShoppingBag id='icon' size={17} /></button>
+                            <button id='buttonForMobile' fullWidth color='gray'  style={{padding: '8px'}}  >BUY  { brodata ? <img width={20} src={buyani}  /> :  <video  src={buyanigif} autoPlay loop={false} > </video> }</button>
                     
                     </div>
                     <div class='w-full h-auto text-[12px] pt-1 text-right cursor-pointer' onClick={open} > Delivery to {pincode}, <b>Change?</b></div>
@@ -227,7 +231,6 @@ function Product() {
             </div>
             <div id='rightD' class='w-[40vw] h-screen bg-slate-0 flex flex-col justify-center pl-[30px]' >
                 <div class='w-[30vw] h-[37.5rem] bg-slate-0 flex flex-col pt-[15px]'>
-
                     <p class='text-3xl'>Image Collection</p>
                     <p class=' text-sm opacity-30 pt-5'>MRP inclusive of all taxes</p>
                     <p class=' text-3xl pt-2'>Rs. 799.00</p>
@@ -235,7 +238,7 @@ function Product() {
                     <div class='h-auto w-[20vw] pt-2'>
                         <SegmentedControl  size="sm" fullWidth data={['XS', ' S', ' M', 'XL', 'XXL']} />
                     </div>
-                    <div class='pt-6 w-100% h-auto'><Button id='buttonForMobile' fullWidth variant="filled" color="gray" style={{padding: '12px'}}  rightSection={<IconShoppingBag size={14} />} >BUY</Button></div>
+                    <div class='pt-6 w-100% h-auto'><Button id='buttonForMobile' fullWidth variant="filled" color="gray" style={{padding: '12px'}}  rightSection={ brodata ? <img width={20} src={buyani} class=''  /> :  <video width={20} src={buyanigif} autoPlay loop={false} > </video> } >BUY</Button></div>
                     <div class='w-full h-auto text-[9px] pt-1 text-right cursor-pointer' onClick={open} > Delivery to {pincode}, <b>Change?</b></div>
                     <div class='pt-6 w-100% h-auto flex flex-row items-center'><Rating value={3.5} fractions={2} readOnly color="gray" /><p class='pl-2 text-sm'>2K Rating</p></div>
                     <div class='pt-5'><Divider my="md" /> </div>

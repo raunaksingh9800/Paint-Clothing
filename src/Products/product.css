@@ -13,27 +13,8 @@
     color: white;
     font-weight: 500;
 
-    animation: pulse 2.5s ease-in;
   }
 
-  #icon {
-    position: relative;
-    top: -1px;
-  }
 
-  @keyframes pulse {
-    0% {
-        background: #868e96;
-        color: white;
-    }
-    70% {
-        background: #ccd7e2;
-        color: black;
-    }
-    100% {
-        background: #868e96;
-        color: white;
-    }
-  }
 
   /* background:  */
