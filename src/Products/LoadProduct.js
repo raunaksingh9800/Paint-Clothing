@@ -7,7 +7,7 @@ import React, {useState, useEffect, useRef} from 'react';
 import platform from 'platform';
 import { Carousel } from '@mantine/carousel';
 import buyani from './wired-outline-146-trolley.gif'
-import buyanigif from './main.mp4'
+import buyanimp4 from './main.mp4'
 import { modals } from '@mantine/modals';
 import CarouselSet from './Carousel'
 const groceries = [
@@ -191,7 +191,7 @@ function Product() {
                     </div>
                     <div class='pt-6 w-100% h-auto'>
 
-                            <button id='buttonForMobile' fullWidth color='gray'  style={{padding: '8px'}}  >BUY  { brodata ? <img width={20} src={buyani}  /> :  <video  src={buyanigif} autoPlay loop={false} > </video> }</button>
+                            <button id='buttonForMobile' fullWidth color='gray'  style={{padding: '8px'}}  >BUY  { brodata ? <img width={20}  class='relative left-[3px] bottom-[1px]' src={buyani}  /> :  <img  src={buyani} class='relative left-[3px] bottom-[1px]' width={20} autoPlay /> }</button>
                     
                     </div>
                     <div class='w-full h-auto text-[12px] pt-1 text-right cursor-pointer' onClick={open} > Delivery to {pincode}, <b>Change?</b></div>
@@ -238,7 +238,7 @@ function Product() {
                     <div class='h-auto w-[20vw] pt-2'>
                         <SegmentedControl  size="sm" fullWidth data={['XS', ' S', ' M', 'XL', 'XXL']} />
                     </div>
-                    <div class='pt-6 w-100% h-auto'><Button id='buttonForMobile' fullWidth variant="filled" color="gray" style={{padding: '12px'}}  rightSection={ brodata ? <img width={20} src={buyani} class=''  /> :  <video width={20} src={buyanigif} autoPlay loop={false} > </video> } >BUY</Button></div>
+                    <div class='pt-6 w-100% h-auto'><Button id='buttonForMobile' fullWidth variant="filled" color="gray" style={{padding: '12px'}}  rightSection={ brodata ? <img width={20} src={buyani} class=''  /> :  <video width={20} src={buyanimp4} autoPlay loop={false} > </video> } >BUY</Button></div>
                     <div class='w-full h-auto text-[9px] pt-1 text-right cursor-pointer' onClick={open} > Delivery to {pincode}, <b>Change?</b></div>
                     <div class='pt-6 w-100% h-auto flex flex-row items-center'><Rating value={3.5} fractions={2} readOnly color="gray" /><p class='pl-2 text-sm'>2K Rating</p></div>
                     <div class='pt-5'><Divider my="md" /> </div>
