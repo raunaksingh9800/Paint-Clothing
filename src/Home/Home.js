@@ -22,7 +22,7 @@ function Home() {
             size="xl"
             gradient={{ from: 'blue', to: 'grape', deg: 90 }}
             >
-            Go to Product Page
+            Go to Product 
         </Button>
         </div>
     </>
